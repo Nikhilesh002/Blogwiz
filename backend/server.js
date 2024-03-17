@@ -8,7 +8,7 @@ const mongoClient=require('mongodb').MongoClient;
 
 const path=require('path');
 // deploy react build in this server
-app.use(exp.static(path.join(__dirname,'./client/dist')));
+app.use(exp.static(path.join(__dirname,'../client/dist')));
 
 
 // connect to db
@@ -47,7 +47,7 @@ app.use('/admin-api',adminApp);
 // deals page refreshes
 // checks all above links of middlewares, as they dont match, it searches index.html of client
 app.use((req,res,next)=>{
-  res.sendFile(path.join(__dirname,'./client/dist/index.html'))
+  res.sendFile(path.join(__dirname,'../client/dist/index.html'))
 })
 
 

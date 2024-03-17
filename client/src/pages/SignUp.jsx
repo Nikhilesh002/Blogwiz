@@ -13,6 +13,7 @@ function SignUp() {
   async function signup(data){
     // http post req
     let res=await axios.post(`${window.location.origin}/${data.userType}-api/register`,data);
+    //console.log(res);
     if(res.data.message==="Registration Successful"){
       navigate('/signin');
     }

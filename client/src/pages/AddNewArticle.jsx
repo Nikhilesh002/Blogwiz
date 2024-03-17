@@ -25,8 +25,10 @@ function AddNewArticle() {
     article.username = currentUser.username;
     article.comments = [];
     article.status = true;
+    console.log(article);
     // http post
     const res=await axiosWithToken.post(`${window.location.origin}/author-api/post-article`,article);
+    console.log(res);
     if(res.data.message==="Article created Successfully"){
       navigate(`/author-profile/my-articles/${currentUser.username}`);
     }

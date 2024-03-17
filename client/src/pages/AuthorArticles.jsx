@@ -22,14 +22,6 @@ function AuthorArticles() {
     navigate(`/author-profile/article/${articleObj.articleId}`,{state:articleObj});
   }
 
-  //convert ISO date to UTC data
-  function ISOtoUTC(iso) {
-    let date = new Date(iso).getUTCDate();
-    let month = new Date(iso).getUTCMonth()+1; // months are 0 based
-    let year = new Date(iso).getUTCFullYear();
-    return `${date}/${month}/${year}`;
-  }
-
   return (
     <div className="bg-blue-200 min-h-96">
       <h1 className='text-center text-xl font-bold font-sans text-teal-500 '>{currentUser.username}'s Articles</h1>
@@ -45,7 +37,7 @@ function AuthorArticles() {
               <button className='bg-rose-400 rounded-md px-2 py-1 m-auto ' onClick={()=>readArticleById(x)} >Read More</button>
             </div>
             <div className="">
-              <p className='text-sm'>Last Updated on {ISOtoUTC(x.dateOfModification)}</p>
+              <p className='text-sm'>Last Updated on {x.dateOfModification}</p>
             </div>
           </div>)
         )

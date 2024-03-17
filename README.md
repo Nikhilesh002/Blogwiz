@@ -1,0 +1,1 @@
+npm install axios react-router-dom react-hook-form react-redux react-icons @reduxjs/toolkit
