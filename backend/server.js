@@ -1,10 +1,19 @@
 // create express app
 const exp=require('express');
 const app=exp();
+const cors = require('cors')
 require('dotenv').config();   // adds .env content to process obj, which is a global obj like document,window in browser
 
 // import mongodb
 const mongoClient=require('mongodb').MongoClient;
+
+app.use(cors(
+  {
+      origin: ["https://blogwiz.vercel.app"],
+      methods: ["POST", "GET", "PUT", "DELETE"],
+      credentials: true
+  }
+));
 
 const path=require('path');
 // deploy react build in this server
