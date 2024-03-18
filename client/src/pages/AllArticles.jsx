@@ -9,7 +9,7 @@ function AllArticles() {
   let {currentUser}=useSelector(state=>state.userAuthorLoginReducer);
 
   async function getArticles(){
-    const res=await axiosWithToken.get('http://localhost:4000/user-api/articles');
+    const res=await axiosWithToken.get(`${window.location.origin}/user-api/articles`);
     setArticlesList(res.data.payload);
   }
 
