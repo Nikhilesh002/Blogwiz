@@ -55,9 +55,9 @@ app.use('/admin-api',adminApp);
 // if we refresh, we get error so add this middleware
 // deals page refreshes
 // checks all above links of middlewares, as they dont match, it searches index.html of client
-app.use((req,res,next)=>{
-  res.sendFile(path.join(__dirname,'../client/dist/index.html'))
-})
+// app.use((req,res,next)=>{
+//   res.sendFile(path.join(__dirname,'../client/dist/index.html'))
+// })
 
 
 

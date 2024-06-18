@@ -27,7 +27,7 @@ function AuthorArticles() {
       <h1 className='text-center text-xl font-bold font-sans text-teal-500 '>{currentUser.username}'s Articles</h1>
       <div className='py-3 px-2 grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 '>
       {
-        articlesList.map(x=>(
+        articlesList && articlesList.map(x=>(
           <div className="max-w-96 h-60 text-center py-3 px-1 border-2 border-black rounded-md" key={x.articleId}>
             <div className="">
               <h1 className='font-medium text-xl'>{x.title}</h1>

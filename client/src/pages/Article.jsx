@@ -127,7 +127,7 @@ function Article() {
               }
               <div className="">
                 {
-                  state.comments.length===0?<p className=''>No Comments...</p>:(
+                  state.comments && state.comments.length===0?<p className=''>No Comments...</p>:(
                     state.comments.map((commentObj,ind)=>(
                       <div key={ind} className="w-full sm:w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6 bg-slate-100 m-1 px-2 py-1 text-lg rounded-lg">
                         <p className='w-full' style={{color: "dodgerblue",textTransform: "capitalize"}}><FcPortraitMode className='text-xl inline pe-1'/> {commentObj.username}</p>
