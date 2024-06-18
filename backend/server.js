@@ -9,7 +9,7 @@ const mongoClient=require('mongodb').MongoClient;
 
 app.use(cors(
   {
-      origin: ["https://blogwiz.vercel.app"],
+      origin: ["https://blogwiz.onrender.com"],
       methods: ["POST", "GET", "PUT", "DELETE"],
       credentials: true
   }
@@ -55,10 +55,11 @@ app.use('/admin-api',adminApp);
 // if we refresh, we get error so add this middleware
 // deals page refreshes
 // checks all above links of middlewares, as they dont match, it searches index.html of client
-// app.use((req,res,next)=>{
-//   res.sendFile(path.join(__dirname,'../client/dist/index.html'))
-// })
 
+// Catch-all route to handle client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 
 // express error handler
