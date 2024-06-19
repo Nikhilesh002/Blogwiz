@@ -45,6 +45,9 @@ function SignUp() {
     if (errors.email) {
       toast.error("Email is required");
     }
+    if (err) {
+      toast.error(err)
+    }
     return;
   }
 
@@ -57,9 +60,6 @@ function SignUp() {
             Sign-Up
           </h1>
           {/* Display general error message */}
-          {err && (
-            toast.error(err)
-          )}
 
           <div className="flex gap-10 px-5">
             <div>

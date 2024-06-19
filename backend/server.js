@@ -7,13 +7,12 @@ require('dotenv').config();   // adds .env content to process obj, which is a gl
 // import mongodb
 const mongoClient=require('mongodb').MongoClient;
 
-app.use(cors(
-  {
-      origin: ["https://blogwiz.onrender.com"],
-      methods: ["POST", "GET", "PUT", "DELETE"],
-      credentials: true
-  }
-));
+// Middleware for CORS
+app.use(cors({
+  origin: ["https://blogwiz.onrender.com", "https://blogwiz.vercel.app"],
+  methods: ["POST", "GET", "PUT", "DELETE"],
+  credentials: true
+}));
 
 const path=require('path');
 // deploy react build in this server
