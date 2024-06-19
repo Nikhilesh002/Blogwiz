@@ -68,7 +68,7 @@ function SignIn() {
               <label htmlFor="user">User</label>
             </div>
 
-            <div className="">
+            {/* <div className="">
               <input
                 type="radio"
                 name="userType"
@@ -77,7 +77,7 @@ function SignIn() {
                 {...register("userType", { required: true })}
               />
               <label htmlFor="admin">Admin</label>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex flex-col gap-5 my-5">
@@ -98,14 +98,14 @@ function SignIn() {
 
           <button
             type="submit" onClick={validate}
-            className="block mx-auto mt-4 w-32 h-10 border-2 border-gray-800 rounded-full transition-all duration-300 cursor-pointer bg-slate-400 text-lg font-semibold font-montserrat hover:bg-gray-800 hover:text-white hover:text-xl"
+            className="block mx-auto mt-4 w-32 h-10 border-2 border-gray-800 rounded-full transition-all duration-300 cursor-pointer bg-slate-300 text-lg font-semibold font-montserrat hover:bg-gray-800 hover:text-white hover:text-xl"
           >
             Sign-In
           </button>
         </form>
         
           <p className=" text-right pe-5">
-            New User? <Link className="text-blue-500 hover:underline" to="/signup">Create Account here</Link>
+            New User? <Link className="text-blue-500 hover:underline" to="/signup">{" "}Sign-Up here</Link>
           </p>
         
       </div>

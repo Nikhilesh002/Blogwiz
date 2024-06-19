@@ -106,7 +106,7 @@ function SignUp() {
           </div>
           <button
             type="submit" onClick={validate}
-            className="block mx-auto mt-4 w-32 h-10 border-2 border-gray-800 rounded-full transition-all duration-300 cursor-pointer bg-slate-400 text-lg font-semibold font-montserrat hover:bg-gray-800 hover:text-white hover:text-xl"
+            className="block mx-auto mt-4 w-32 h-10 border-2 border-gray-800 rounded-full transition-all duration-300 cursor-pointer bg-slate-300 text-lg font-semibold font-montserrat hover:bg-gray-800 hover:text-white hover:text-xl"
           >
             Sign-Up
           </button>
@@ -115,7 +115,7 @@ function SignUp() {
         <p className="text-right pe-5">
           Existing User?
           <Link className="text-blue-500 hover:underline" to="/signin">
-            Sign-In here
+            {" "}Sign-In here
           </Link>
         </p>
       </div>

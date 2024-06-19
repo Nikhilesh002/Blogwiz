@@ -70,7 +70,7 @@ function AllArticles() {
             ))}
         </div>
       ) : (
-        <h1 className="text-center h-full ">Login to view Articles</h1>
+          <h1 className="h-full font-bold text-2xl text-center mt-28 ">Login to view Articles</h1>
       )}
     </div>
   );
