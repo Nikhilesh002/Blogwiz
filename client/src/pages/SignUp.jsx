@@ -26,7 +26,7 @@ function SignUp() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.error("Signup error:", error);
+      // console.error("Signup error:", error);
       setErr("Registration failed. Please try again later.");
       toast.error("Registration failed. Please try again later.");
     }
