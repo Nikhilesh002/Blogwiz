@@ -14,7 +14,6 @@ import SignIn from './pages/SignIn.jsx';
 import AllArticles from './pages/AllArticles.jsx';
 import AuthorProfile from './pages/AuthorProfile.jsx';
 import AuthorArticles from './pages/AuthorArticles.jsx';
-import UserProfile from './pages/UserProfile.jsx';
 import Home from './pages/Home.jsx';
 
 // lazy loading or dynamic import
@@ -38,8 +37,7 @@ ReactDOM.render(
             <Route path='article/:articleId' element={<Suspense fallback='Loading...'><Article/></Suspense>} />
           </Route>
 
-          <Route path='user-profile' element={<UserProfile/>}>
-            <Route path='' element={<AllArticles/>} />
+          <Route path='user-profile' element={<AllArticles/>}>
             <Route path='article/:articleId' element={<Suspense fallback='Loading...'><Article/></Suspense>} />
           </Route>
 
