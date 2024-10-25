@@ -48,7 +48,7 @@ export default function AuthorArticles() {
         {currentUser.username}'s Articles
       </h1>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {articlesList.map((article) => (
+        {articlesList && articlesList.map((article) => (
           <div
             key={article.articleId}
             className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 border border-gray-200"

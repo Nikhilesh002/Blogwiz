@@ -127,10 +127,10 @@ export default function Article() {
               {comment && (
                 <CommentItem username={comment.username} comment={comment.comment} />
               )}
-              {state.comments && state.comments.length === 0 ? (
+              {state?.comments && state.comments.length === 0 ? (
                 <p className="text-gray-500">No comments yet</p>
               ) : (
-                state.comments.map((commentObj, ind) => (
+                state?.comments?.map((commentObj, ind) => (
                   <CommentItem key={ind} username={commentObj.username} comment={commentObj.comment} />
                 ))
               )}
