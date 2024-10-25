@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,14 +7,15 @@ import toast, { Toaster } from 'react-hot-toast';
 
 function SignIn() {
   let dispatch = useDispatch();
-  let { loginUserStatus, currentUser, errorOccured, errMsg } = useSelector(
+  let { loginUserStatus, currentUser } = useSelector(
     (state) => state.userAuthorLoginReducer
   );
   const { register, handleSubmit,formState: { errors } } = useForm();
   let navigate = useNavigate();
 
   async function signin(data) {    
-    dispatch(userAuthorLoginThunk(data));
+    const res=dispatch(userAuthorLoginThunk(data));
+    console.log(res)
   }
 
   function validate(){
@@ -34,7 +35,7 @@ function SignIn() {
     if (loginUserStatus === true) {
       navigate(`/${currentUser.userType}-profile`);
     }
-  }, [loginUserStatus]);
+  }, [loginUserStatus,currentUser.userType,navigate]);
 
   
   return (

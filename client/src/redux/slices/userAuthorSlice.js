@@ -6,8 +6,7 @@ import axios from 'axios';
 // make http req using redux-thunk middleware
 export const userAuthorLoginThunk=createAsyncThunk('user-author-login',async(userCredObj,thunkApi)=>{
   try {
-    if(userCredObj.userType==="user"){
-      const res=await axios.post(`${window.location.origin}/user-api/login`,userCredObj);
+    const res=await axios.post(`${window.location.origin}/${userCredObj.userType}-api/login`,userCredObj);
       if(res.data.message==="Login Success"){
         // store token in local/session storage
         localStorage.setItem("token",res.data.token);
@@ -17,19 +16,6 @@ export const userAuthorLoginThunk=createAsyncThunk('user-author-login',async(use
         return thunkApi.rejectWithValue(res.data.message);
       }
       return res.data;
-    }
-    else if(userCredObj.userType==="author"){
-      const res=await axios.post(`${window.location.origin}/author-api/login`,userCredObj);
-      if(res.data.message==="Login Success"){
-        // store token in local/session storage
-        localStorage.setItem("token",res.data.token);
-        // return data
-      }
-      else{
-        return thunkApi.rejectWithValue(res.data.message);
-      }
-      return res.data;
-    }
   } catch (error) {
     return thunkApi.rejectWithValue(error);
   }

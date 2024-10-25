@@ -1,20 +1,28 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { axiosWithToken } from "../axioswithtoken/axiosWithToken";
+import { FaClock, FaChevronRight } from "react-icons/fa";
 
-function AllArticles() {
-  let [articlesList, setArticlesList] = useState([]);
-  let navigate = useNavigate();
-  let { currentUser, loginUserStatus } = useSelector(
+export default function AllArticles() {
+  const [articlesList, setArticlesList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const { currentUser, loginUserStatus } = useSelector(
     (state) => state.userAuthorLoginReducer
   );
 
   async function getArticles() {
-    const res = await axiosWithToken.get(
-      `${window.location.origin}/user-api/articles`
-    );
-    setArticlesList(res.data.payload);
+    try {
+      const res = await axiosWithToken.get(
+        `${window.location.origin}/user-api/articles`
+      );
+      setArticlesList(res.data.payload);
+    } catch (error) {
+      console.error("Failed to fetch articles:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -28,52 +36,55 @@ function AllArticles() {
     );
   }
 
+  if (!loginUserStatus) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <h1 className="text-3xl font-bold text-gray-800">Login to view Articles</h1>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-gray-300 min-h-96">
-      {currentUser.userType === "author" ? (
-        <h1 className="text-center text-xl font-bold font-sans text-teal-500 ">
-          {currentUser.username}'s Articles
-        </h1>
-      ) : (
-        <h1 className="text-center text-xl font-bold font-sans text-teal-500 ">
-          All Articles
-        </h1>
-      )}
-      {loginUserStatus ? (
-        <div className="py-3 px-2 grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-          {articlesList &&
-            articlesList.map((x) => (
-              <div
-                className="max-w-96 h-60 text-center py-3 px-1 border-2 border-black rounded-md"
-                key={x.articleId}
-              >
-                <div className="">
-                  <h1 className="font-medium text-xl">{x.title}</h1>
-                </div>
-                <div className="">
-                  <p className="font-normal text-lg">
-                    {x.content.substring(0, 80) + "..."}
-                  </p>
-                  <button
-                    className="bg-rose-400 rounded-md px-2 py-1 m-auto "
-                    onClick={() => readArticleById(x)}
-                  >
-                    Read More
-                  </button>
-                </div>
-                <div className="">
-                  <p className="text-sm">
-                    Last Updated on {x.dateOfModification}
-                  </p>
-                </div>
-              </div>
-            ))}
+    <div className="bg-gray-100 min-h-screen p-6">
+      <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">
+        {currentUser.userType === "author"
+          ? `${currentUser.username}'s Articles`
+          : "All Articles"}
+      </h1>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-800"></div>
         </div>
       ) : (
-          <h1 className="h-full font-bold text-2xl text-center mt-28 ">Login to view Articles</h1>
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {articlesList.map((article) => (
+            <div
+              key={article.articleId}
+              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 border border-gray-200"
+            >
+              <div className="p-6">
+                <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-2">
+                  {article.title}
+                </h2>
+                <p className="text-gray-600 mb-4 line-clamp-3">
+                  {article.content}
+                </p>
+                <div className="flex items-center text-sm text-gray-500 mb-4">
+                  <FaClock className="w-4 h-4 mr-1" />
+                  <span>Last updated on {new Date(article.dateOfModification).toLocaleDateString()}</span>
+                </div>
+                <button
+                  className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors duration-300 flex items-center justify-center"
+                  onClick={() => readArticleById(article)}
+                >
+                  Read More
+                  <FaChevronRight className="w-4 h-4 ml-1" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
 }
-
-export default AllArticles;

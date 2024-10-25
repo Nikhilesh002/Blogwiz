@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { axiosWithToken } from "../axioswithtoken/axiosWithToken";
+import { FaUserEdit, FaClock } from "react-icons/fa";
 
-function AuthorArticles() {
-  let [articlesList, setArticlesList] = useState([]);
-  let navigate = useNavigate();
-  let { currentUser } = useSelector((state) => state.userAuthorLoginReducer);
+export default function AuthorArticles() {
+  const [articlesList, setArticlesList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.userAuthorLoginReducer);
 
   async function getArticles() {
-    const res = await axiosWithToken.get(
-      `${window.location.origin}/author-api/articles/${currentUser.username}`
-    );
-    setArticlesList(res.data.payload);
+    try {
+      const res = await axiosWithToken.get(
+        `${window.location.origin}/author-api/articles/${currentUser.username}`
+      );
+      setArticlesList(res.data.payload);
+    } catch (error) {
+      console.error("Failed to fetch articles:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -25,42 +33,50 @@ function AuthorArticles() {
     });
   }
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-gray-300 min-h-96">
-      <h1 className="text-center text-xl font-bold font-sans text-teal-500 ">
+    <div className="bg-gray-100 min-h-screen p-6">
+      <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">
+        <FaUserEdit className="inline-block mr-2 mb-1" />
         {currentUser.username}'s Articles
       </h1>
-      <div className="py-3 px-2 grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-        {articlesList &&
-          articlesList.map((x) => (
-            <div
-              className="max-w-96 h-60 text-center py-3 px-1 border-2 border-black rounded-md"
-              key={x.articleId}
-            >
-              <div className="">
-                <h1 className="font-medium text-xl">{x.title}</h1>
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {articlesList.map((article) => (
+          <div
+            key={article.articleId}
+            className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 border border-gray-200"
+          >
+            <div className="p-6">
+              <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-2">
+                {article.title}
+              </h2>
+              <p className="text-gray-600 mb-4 line-clamp-3">
+                {article.content}
+              </p>
+              <div className="flex items-center text-sm text-gray-500 mb-4">
+                <FaClock className="w-4 h-4 mr-1" />
+                <span>
+                  Last updated on{" "}
+                  {new Date(article.dateOfModification).toLocaleDateString()}
+                </span>
               </div>
-              <div className="">
-                <p className="font-normal text-lg">
-                  {x.content.substring(0, 80) + "..."}
-                </p>
-                <button
-                  className="bg-rose-400 rounded-md px-2 py-1 m-auto "
-                  onClick={() => readArticleById(x)}
-                >
-                  Read More
-                </button>
-              </div>
-              <div className="">
-                <p className="text-sm">
-                  Last Updated on {x.dateOfModification}
-                </p>
-              </div>
+              <button
+                className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors duration-300 flex items-center justify-center"
+                onClick={() => readArticleById(article)}
+              >
+                Read More
+              </button>
             </div>
-          ))}
+          </div>
+        ))}
       </div>
     </div>
   );
 }
-
-export default AuthorArticles;
